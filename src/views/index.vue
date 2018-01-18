@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { initIconfont, setBundleUrl } from './tools/utils'
+import { initIconfont, setBundleUrl } from '../tools/utils'
 const navigator = weex.requireModule('navigator')
 export default {
   name: 'app',
@@ -21,7 +21,7 @@ export default {
   methods: {
     onWeexRouterJump () {
       navigator.push({
-        url: setBundleUrl(weex.config.bundleUrl, 'pages/test.js'),
+        url: setBundleUrl(weex.config.bundleUrl, 'test.js'),
         animated: 'true'
       })
     },

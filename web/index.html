@@ -30,19 +30,5 @@
 </head>
 <body>
   <div id="root"></div>
-<script>
-  (function () {
-    function getUrlParam (key) {
-      var reg = new RegExp('[?|&]' + key + '=([^&]+)')
-      var match = location.search.match(reg)
-      return match && match[1]
-    };
-    var page = getUrlParam('page') || '/dist/index.js';
-    var bundle = document.createElement('script')
-    // only for web
-    bundle.src = page.replace(/\.js$/, '.web.js')
-    document.body.appendChild(bundle)
-  })();
-</script>
 </body>
 </html>

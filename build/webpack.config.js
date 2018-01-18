@@ -1,56 +1,31 @@
-const pathTo = require('path');
+const path = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const entry = { index: pathTo.resolve('src', 'entry.js') + '?entry=true' };
-const weexEntry = { index: pathTo.resolve('src', 'entry.js') + '?entry=true' };
-const vueWebTemp = '../temp';
+const entry = { };
+const weexEntry = { };
 const hasPluginInstalled = fs.existsSync('./web/plugin.js');
 const isWin = /^win/.test(process.platform);
 const buildEnv = JSON.parse(process.env.npm_config_argv).remain[0] || 'test'
 
-// Wraping the entry file
-const getEntryFileContent = (entryPath, vueFilePath) => {
-    let relativePath = pathTo.relative(pathTo.join(entryPath, '../'), vueFilePath);
-    let contents = '';
-    /**
-     * The plugin's logic currently only supports the .we version
-     * which will be supported later in .vue
-     */
-    if (hasPluginInstalled) {
-      const plugindir = pathTo.resolve('./web/plugin.js');
-      contents = 'require(\'' + plugindir + '\') \n';
-    }
-    if (isWin) {
-      relativePath = relativePath.replace(/\\/g, '\\\\');
-    }
-    contents += 'var App = require(\'' + relativePath + '\')\n';
-    contents += 'App.el = \'#root\'\n';
-    contents += 'new Vue(App)\n';
-    return contents;
-  }
 // Retrieve entry file mappings by function recursion
 const walk = (dir) => {
     dir = dir || '.';
-    const directory = pathTo.join(__dirname, '../src', dir);
+    const directory = path.join(__dirname, '../src', dir);
     fs.readdirSync(directory).forEach((file) => {
-      const fullpath = pathTo.join(directory, file);
+      const fullpath = path.join(directory, file);
       const stat = fs.statSync(fullpath);
-      const extname = pathTo.extname(fullpath);
-      const basename = pathTo.basename(fullpath);
-      if (stat.isFile() && extname === '.vue') {
-        const name = pathTo.join(dir, pathTo.basename(file, extname));
-        if (extname === '.vue') {
-          const entryFile = pathTo.join(vueWebTemp, dir, pathTo.basename(file, extname) + '.js');
-          fs.outputFileSync(pathTo.join(entryFile), getEntryFileContent(entryFile, fullpath));
-          entry[name] = pathTo.join(__dirname, entryFile) + '?entry=true';
-        }
+      const extname = path.extname(fullpath);
+      const basename = path.basename(fullpath);
+      if (stat.isFile() && extname === '.js') {
+        const name = path.basename(file, extname);
+        entry[name] = fullpath + '?entry=true';
         weexEntry[name] = fullpath + '?entry=true';
       }
     });
   }
 // Generate an entry file before writing a webpack configuration
 // 将pages中的.vue文件生成入口文件，以便webpack打包
-walk('pages');
+walk('entry');
 /**
  * Plugins for webpack configuration.
  */
@@ -79,11 +54,17 @@ const plugins = [
 ];
 // Config for compile jsbundle for web.
 const webConfig = {
-  context: pathTo.join(__dirname, ''),
   entry: entry,
   output: {
-    path: pathTo.join(__dirname, '../dist'),
-    filename: '[name].web.js'
+    path: path.join(__dirname, '../dist'),
+    filename: '[name].web.js',
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.join(__dirname, '../src')
+    }
   },
   /**
    * Developer tool to enhance debugging
@@ -147,8 +128,14 @@ const webConfig = {
 const weexConfig = {
   entry: weexEntry,
   output: {
-    path: pathTo.join(__dirname, '../dist'),
+    path: path.join(__dirname, '../dist'),
     filename: '[name].js'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.join(__dirname, '../src')
+    }
   },
   /*
    * Options affecting the resolving of modules.

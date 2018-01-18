@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const configs = require('./webpack.config.js');
 const webpackMerge = require('webpack-merge'); // used to merge webpack configs
-const pathTo = require('path');
+const path = require('path');
 // tools
 const ip = require('ip').address();
 const chalk = require('chalk');
@@ -17,11 +17,9 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
  * Webpack configuration
  */
 // dev状态下，只需要有一个js入口
-delete config.entry
 config.plugins.shift()
 module.exports = function () {
   return webpackMerge(config, {
-    entry: { index: pathTo.resolve('src', 'entry.js') + '?entry=true' },
     /*
      * Options affecting the resolving of modules.
      *
@@ -33,7 +31,7 @@ module.exports = function () {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           enforce: "pre",
-          include: [pathTo.resolve('src'), pathTo.resolve('test')],
+          include: [path.resolve('src'), path.resolve('test')],
           options: {
             formatter: require('eslint-friendly-formatter')
           }
@@ -63,11 +61,20 @@ module.exports = function () {
        * See: https://github.com/ampedandwired/html-webpack-plugin
        */
       new HtmlWebpackPlugin({
-        template: '../web/index.dev.html',
-        title: 'up mobile weex',
+        filename: 'index.html',
+        template: path.join(__dirname, '../web/index.html'),
         isDevServer: true,
+        chunks: ['index'],
         chunksSortMode: 'dependency',
-        inject: 'head'
+        inject: true
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'test.html',
+        template: path.join(__dirname, '../web/index.html'),
+        isDevServer: true,
+        chunks: ['test'],
+        chunksSortMode: 'dependency',
+        inject: true
       }),
       /*
        * Plugin: ScriptExtHtmlWebpackPlugin
@@ -88,27 +95,24 @@ module.exports = function () {
      *
      * See: https://webpack.github.io/docs/webpack-dev-server.html
      */
-    devServer: {
-      compress: true,
-      host: '0.0.0.0',
-      port: '9081',
-      historyApiFallback: true,
-      public: ip + ':9081',
-      watchOptions: {
-        aggregateTimeout: 300,
-        poll: 1000
-      },
-      proxy: {
-        "/vip": {
-          target: 'http://suyun75-up.djtest.cn/', // 测试环境
-          changeOrigin: true,
-          secure: false,
-          cookieDomainRewrite: '',
-          onProxyReq: function (proxyReq, req, res) {
-            proxyReq.setHeader('origin', 'http://suyun75-up.djtest.cn/')
-          }
-        }
-      }
-    }
+    // devServer: {
+    //   compress: true,
+    //   host: '0.0.0.0',
+    //   port: '9081',
+    //   historyApiFallback: true,
+    //   public: ip + ':9081',
+    //   watchOptions: {
+    //     aggregateTimeout: 300,
+    //     poll: 1000
+    //   },
+    //   proxy: {
+    //     // "/api": {
+    //     //   target: '', // 测试环境
+    //     //   changeOrigin: true,
+    //     //   secure: false,
+    //     //   cookieDomainRewrite: ''
+    //     // }
+    //   }
+    // }
   });
 };
