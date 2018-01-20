@@ -1,15 +1,13 @@
 // only build plugin module
-require('webpack')
-require('weex-loader')
+const webpack = require('webpack')
 
-var path = require('path')
-var fs = require('fs')
+const path = require('path')
 
 let root = process.cwd()
 
 module.exports = {
   entry: {
-    plugins: [path.join(root, 'plugins/plugin_bundle.js')],
+    plugins: [path.join(root, 'plugins/plugin_bundle.js')]
   },
   output: {
     path: path.join(root, 'web'),
@@ -33,14 +31,14 @@ module.exports = {
       }
     ]
   },
-  // plugins: [
-  //   new webpack.optimize.UglifyJsPlugin( {
-  //     minimize : true,
-  //     sourceMap : true,
-  //     mangle: true,
-  //     compress: {
-  //       warnings: false
-  //     }
-  //   })
-  // ]
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin( {
+      minimize: true,
+      sourceMap: true,
+      mangle: true,
+      compress: {
+        warnings: false
+      }
+    })
+  ]
 }

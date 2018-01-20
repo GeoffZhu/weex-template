@@ -1,6 +1,4 @@
-import App from '@/views/test.vue'
-import router from '@/router/test-router'
-import store from '@/store/test-store'
+import App from '@/views/test/index.vue'
 import * as filters from '@/tools/filters'
 import http from '@/tools/http'
 
@@ -10,6 +8,4 @@ Object.keys(filters).forEach(key => {
 
 Vue.prototype.$http = http
 
-new Vue({ el: '#root', store, router, render: h => h(App) })
-
-router.push('/')
+new Vue({ el: '#root', render: h => h(App) })

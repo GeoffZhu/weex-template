@@ -1,15 +1,13 @@
 {
-  "name": "weex",
+  "name": "weex-template",
   "version": "1.0.0",
   "description": "A weex project",
   "main": "index.js",
   "scripts": {
-    "ttt": "node ./build/dev-server.js",
-    "dev": "npm run watch & npm run serve",
+    "dev": "node build/dev-server.js & npm run watch",
     "build": "node build/build.js",
     "build:plugin": "webpack --config ./tools/webpack.config.plugin.js --color",
-    "watch": "webpack --config ./build/webpack.config.js --watch -d",
-    "serve": "webpack-dev-server --config ./build/webpack.dev.js --watch --open"
+    "watch": "webpack --config build/webpack.config.js -d"
   },
   "keywords": [
     "weex"
@@ -17,11 +15,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "eslint-plugin-import": "^2.8.0",
+    "expose-loader": "^0.7.4",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "weex-vue-render": "^1.0.14"
+    "weex-vue-render": "^1.0.15"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",
@@ -40,6 +38,7 @@
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-html": "^4.0.1",
+    "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
@@ -57,7 +56,7 @@
     "script-ext-html-webpack-plugin": "^1.8.5",
     "vue-loader": "^12.2.0",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^2.2.1",
+    "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^4.1.0",

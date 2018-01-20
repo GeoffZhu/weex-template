@@ -6,41 +6,22 @@ export function initIconfont () {
   })
 }
 
-export function setBundleUrl (url, jsFile) {
-  const bundleUrl = url
-  let host = ''
-  let path = ''
-  let nativeBase
-  const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0
-  const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0
-  if (isAndroidAssets) {
-    nativeBase = 'file://assets/dist'
-  } else if (isiOSAssets) {
-    // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
-    // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
-    nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1)
-  } else {
-    const matches = /\/\/([^/]+?)\//.exec(bundleUrl)
-    const matchFirstPath = /\/\/[^/]+\/([^\s]+)\//.exec(bundleUrl)
-    if (matches && matches.length >= 2) {
-      host = matches[1]
-    }
-    if (matchFirstPath && matchFirstPath.length >= 2) {
-      path = matchFirstPath[1]
-    }
-    nativeBase = 'http://' + host + '/'
-  }
+export function getEntryUrl (jsFile) {
+  const bundleUrl = weex.config.bundleUrl
+  const host = /\/\/([^/]+?)\//.exec(bundleUrl)[0]
+  const filename = jsFile.split('.')[0]
 
-  const h5Base = './web/index.html?page='
+  // const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0
+  // const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0
+
   const isWeb = weex.config.env.platform.toLowerCase() === 'web'
-  // in Native
-  let base = nativeBase
+  let url = ''
   if (isWeb) {
-    base = h5Base + '/dist/'
+    url = `./${filename}.html`
   } else {
-    base = nativeBase + (path ? path + '/' : '')
+    url = 'http:' + host + `/dist/native/${filename}.js`
   }
-  return base + jsFile
+  return url
 }
 
 export function getUrlSearch (url, name) {

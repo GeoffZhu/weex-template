@@ -3,15 +3,15 @@
     <text class="title">weex-template</text>
     <img class="logo" src="https://sfault-image.b0.upaiyun.com/316/440/3164400520-5a5f200cd55d8_articlex" alt="logo">
     <div class="btn-group">
-      <text class="btn" @click="onVueRouterJump">vue-router跳转</text>
-      <text class="btn" @click="onWeexRouterJump">weex-router跳转</text>
+      <text class="btn" @click="onVueRouterJump">Vue-router Go</text>
+      <text class="btn" @click="onWeexRouterJump">Weex-navigator Go</text>
     </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { initIconfont, setBundleUrl } from '../tools/utils'
+import { initIconfont, getEntryUrl } from '@/tools/utils'
 const navigator = weex.requireModule('navigator')
 export default {
   name: 'app',
@@ -21,7 +21,7 @@ export default {
   methods: {
     onWeexRouterJump () {
       navigator.push({
-        url: setBundleUrl(weex.config.bundleUrl, 'test.js'),
+        url: getEntryUrl('test.js'),
         animated: 'true'
       })
     },
@@ -51,14 +51,16 @@ export default {
   flex-direction: row;
 }
 .btn {
+  width: 335px;
   color: #ffffff;
   background-color: #46b4ff;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
+  text-align: center;
 }
 </style>
