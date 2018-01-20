@@ -32,4 +32,9 @@ npm run build prod
 
 ## Demo展示
 
+#### Web
+
+[http://geoffzhu.cn/weex-template/](http://geoffzhu.cn/weex-template/)
+
+#### Native (Use weex playground)
 ![](http://geoffzhu.cn/weex-template/qr-code.png)
