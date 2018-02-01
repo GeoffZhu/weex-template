@@ -12,7 +12,7 @@
 - You can compile web-side HTML pages directly.
 - Introducing postcss-plugin-px2rem and autoprefixer for web, simpler adaptation to web.
 - Easy to use vue-router、vuex.
-- Support all weex-toolkit shell.
+- Support all weex-toolkit(v1.2.8) Commands.
 
 ## How to use?
 

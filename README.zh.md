@@ -10,7 +10,7 @@
 - 可以直接编译web端HTML页面
 - 针对web端引入postcss-plugin-px2rem和autoprefixer，更简单的适配web端
 - 开箱即用的vue-router、vuex
-- 支持weex-toolkit所有命令
+- 支持weex-toolkit(v1.2.8)所有命令
 
 ## 如何使用？
 
