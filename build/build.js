@@ -7,9 +7,11 @@ var chalk = require('chalk')
 var webpack = require('webpack')
 var webpackConfig = require('./webpack.config.js')
 var buildEnv = JSON.parse(process.env.npm_config_argv).remain[0] || 'test'
+var fs = require('fs-extra')
 
 var spinner = ora(`building for ${buildEnv}...`)
 spinner.start()
+
 
 rm(path.resolve(__dirname, '../dist'), err => {
   if (err) throw err
@@ -25,5 +27,14 @@ rm(path.resolve(__dirname, '../dist'), err => {
     }) + '\n\n')
 
     console.log(chalk.cyan('  Build complete.\n'))
+    // copy bundleJS file to ios project
+    fs.pathExists(path.resolve(__dirname, '../platforms/ios/bundlejs/')).then(exists => {
+      if (!exists) return
+      fs.copy(path.resolve(__dirname, '../dist/native/'), path.resolve(__dirname, '../platforms/ios/bundlejs/')).then(() => {
+        console.log(chalk.cyan('  Copy to ios platform complete.\n'))
+      }).catch(err => {
+        console.log(err)
+      })
+    })
   })
 })

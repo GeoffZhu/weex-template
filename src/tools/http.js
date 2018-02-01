@@ -7,10 +7,10 @@ if (platform === 'web') {
   apiRoot = window.location.origin
 } else {
   if (process.env === 'test') {
-    // 测试环境域名
+    // for test
     apiRoot = 'http://your.test.com'
   } else {
-    // 正式环境域名
+    // for production
     apiRoot = 'http://your.online.com'
   }
 }
