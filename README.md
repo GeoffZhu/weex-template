@@ -1,6 +1,6 @@
 # weex-template
 
-[中文文档](https://github.com/GeoffZhu/vue-template/blob/master/README.zh.md)
+[中文文档](https://github.com/GeoffZhu/weex-template/blob/master/README.zh.md)
 
 ## Why is this template?
 
