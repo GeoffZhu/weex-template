@@ -6,6 +6,6 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
-Vue.prototype.$http = http
+Vue.use(http)
 
 new Vue({ el: '#root', render: h => h(App) })

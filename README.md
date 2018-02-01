@@ -1,36 +1,77 @@
-# 更符合前端工程师的weex项目模板
+# weex-template
 
-## 为什么有这个模板？
+[中文文档](https://github.com/GeoffZhu/vue-template/blob/master/README.zh.md)
 
-1. 官方cli生成出的项目模板引用的各类包相对老旧。
-2. 官方cli生成出的项目模板无法直接编译出可在线上使用的html页面。
+## Why is this template?
 
-## 本模板优势
+1. The official template is too old, weex changed a lot.
+2. The official template only generated native bundleJS, not have html for web.
 
-- 可以直接编译web端HTML页面
-- 针对web端引入postcss-plugin-px2rem和autoprefixer，更简单的适配web端
-- 开箱即用的vue-router、vuex
-- 支持weex-toolkit所有命令
+## Advantage
 
-## 如何使用？
+- You can compile web-side HTML pages directly.
+- Introducing postcss-plugin-px2rem and autoprefixer for web, simpler adaptation to web.
+- Easy to use vue-router、vuex.
+- Support all weex-toolkit shell.
 
-下载本项目zip包，解压后
+## How to use?
+
+download this repo, and then
 
 ``` shell
 
 npm install
 
-# 开发
+# develop
 npm run dev
 
-# 测试包（含有source-map）
+# build debug bundle to dist folder
 npm run build
 
-# 正式包 (静态资源加hash)
+# build production bundle to dist folder
 npm run build prod
+
 ```
 
-## Demo展示
+If there is an ios project in your platforms folder, when build complated, It will copy bundleJS to ```/platforms/ios/bundlejs/```.
+
+## Internal plugin and methods
+
+### Vue http plugin
+Package weex-stream module as a vue-plugin, more vue flavor. :)
+
+``` javascript
+// GET
+this.$http({
+  url: '/address',
+  headers: {},
+  params: {
+    id: 'test-id'
+  }
+})
+// POST
+this.$http({
+  method: 'POST',
+  url: '/address',
+  headers: {},
+  body: {
+    id: 'test-id'
+  }
+})
+```
+If you want to use this vue plugin, config api domain first before develop, in ```/src/tools/http.js```.
+
+### getEntryUrl
+
+``` javascript
+// weex navigator use 
+navigator.push({
+  url: getEntryUrl('test'),
+  animated: 'true'
+})
+```
+
+## Demo
 
 #### Web
 

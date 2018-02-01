@@ -7,7 +7,7 @@
     "dev": "node build/dev-server.js & npm run watch",
     "build": "node build/build.js",
     "build:plugin": "webpack --config ./tools/webpack.config.plugin.js --color",
-    "watch": "webpack --config build/webpack.config.js -d"
+    "watch": "webpack --config build/webpack.config.js --watch -d"
   },
   "keywords": [
     "weex"

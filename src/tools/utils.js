@@ -6,20 +6,23 @@ export function initIconfont () {
   })
 }
 
-export function getEntryUrl (jsFile) {
+export function getEntryUrl (filename) {
   const bundleUrl = weex.config.bundleUrl
-  const host = /\/\/([^/]+?)\//.exec(bundleUrl)[0]
-  const filename = jsFile.split('.')[0]
+  // const host = /\/\/([^/]+?)\//.exec(bundleUrl)[0]
 
-  // const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0
-  // const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0
+  const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0
+  const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('.app') > 0
 
   const isWeb = weex.config.env.platform.toLowerCase() === 'web'
   let url = ''
   if (isWeb) {
     url = `./${filename}.html`
   } else {
-    url = 'http:' + host + `/dist/native/${filename}.js`
+    if (isiOSAssets || isAndroidAssets) {
+      url = `${bundleUrl.split('bundlejs')[0]}/bundlejs/${filename}.js`
+    } else {
+      url = `${bundleUrl.split('native')[0]}/native/${filename}.js`
+    }
   }
   return url
 }

@@ -16,11 +16,13 @@
     #define DEMO_HOST CURRENT_IP
 #endif
 
-#define DEMO_URL(path) [NSString stringWithFormat:@"http://%@:12580/%s", DEMO_HOST, #path]
+#define DEMO_URL(path) [NSString stringWithFormat:@"http://%@:9091/%s", DEMO_HOST, #path]
 
 #define HOME_URL [NSString stringWithFormat:@"http://%@:8080/dist/index.js", DEMO_HOST]
 
 #define BUNDLE_URL [NSString stringWithFormat:@"file://%@/bundlejs/index.js",[NSBundle mainBundle].bundlePath]
+
+#define DEBUG_URL [NSString stringWithFormat:@"http://%@:9091/dist/native/index.js",DEMO_HOST]
 
 #define UITEST_HOME_URL @"http://test?_wx_tpl=http://localhost:12580/test/build/TC__Home.js"
 

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" bubble="true">
     <text class="title">weex-template</text>
-    <img class="logo" src="https://sfault-image.b0.upaiyun.com/316/440/3164400520-5a5f200cd55d8_articlex" alt="logo">
+    <image class="logo" src="http://o80ronwlu.bkt.clouddn.com/3164400520-5a5f200cd55d8_articlex.png" alt="logo"></image>
     <div class="btn-group">
       <text class="btn" @click="onVueRouterJump">Vue-router Go</text>
       <text class="btn" @click="onWeexRouterJump">Weex-navigator Go</text>
@@ -21,12 +21,16 @@ export default {
   methods: {
     onWeexRouterJump () {
       navigator.push({
-        url: getEntryUrl('test.js'),
+        url: getEntryUrl('test'),
         animated: 'true'
       })
     },
     onVueRouterJump () {
-      this.$router.push('/page2')
+      if (this.$route.path === '/page1') {
+        this.$router.push('/page2')
+      } else {
+        this.$router.push('/page1')
+      }
     }
   }
 }
